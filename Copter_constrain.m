@@ -27,8 +27,8 @@ classdef Copter_constrain< handle
          copter.Rotor2.Drive(u(2),dt);
          copter.Rotor3.Drive(u(3),dt);
          copter.Rotor4.Drive(u(4),dt);
-         copter.Servo1.getTorque(u(5),copter.x(13),copter.x(14),copter.D.D.Gq(7));
-         copter.Servo2.getTorque(u(6),copter.x(15),copter.x(16),copter.D.D.Gq(8));
+%         copter.Servo1.getTorque(u(5),copter.x(13),copter.x(14),copter.D.D.Gq(7));
+ %        copter.Servo2.getTorque(u(6),copter.x(15),copter.x(16),copter.D.D.Gq(8));
          copter.f=[copter.Rotor1.thrust,copter.Rotor2.thrust,copter.Rotor3.thrust,copter.Rotor4.thrust,...
              copter.Rotor1.tau_c,copter.Rotor2.tau_c,copter.Rotor3.tau_c,copter.Rotor4.tau_c,0,0];%copter.Servo1.tau,copter.Servo2.tau]';
          %copter.f=[1.3*9.8/4 1.3*9.8/4 1.3*9.8/4 1.3*9.8/4 0 0 0 0 copter.Servo1.tau copter.Servo2.tau]';

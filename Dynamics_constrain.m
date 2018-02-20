@@ -49,6 +49,40 @@ classdef Dynamics_constrain < handle
         C.D.calculateMatrix(y,u,LEVEL);
         %x=[x y z ph th ps eta1 eta2 x_dot y_dot z_dot ph_dot th_dot ps_dot eta1_dot eta2_dot]
         
+        if LEVEL==0
+        z=[C.x(1:6,1);C.x(9:8+n);C.x(9+n:14+n,1);C.x(17+n:16+2*n)];
+        M=zeros(6+n);
+        M(1:6,1:6)=C.D.Mq;
+        M(1:6,7:6+n)=C.Jc(:,1:6)';
+        M(7:6+n,1:6)=C.Jc(:,1:6);
+        
+        H=zeros(6+n,1);
+        H(1:6,1)=C.D.Fq-C.D.Cq-C.D.Gq;
+        H(7:6+n,1)=-C.Jc_dot(:,1:6)*z(7+n:12+n,1);
+        
+        A=zeros(12+2*n);
+        A(1:6+n,1:6+n)=eye(6+n);
+        A(7+n:12+2*n,7+n:12+2*n)=M;
+        
+        B=zeros(12+2*n,1);
+        B(1:6+n,1)=z(7+n:12+2*n);
+        B(7+n:12+2*n)=H;
+        
+        if isnan(det(A))
+            disp("発散!!");
+            disp(A)
+            pause
+        end
+        
+        z=z+A\B.*dt;
+        C.x(1:6,1)=z(1:6);
+        C.x(9:8+n)=z(7:6+n);
+        C.x(9+n:14+n,1)=z(7+n:12+n);
+        C.x(17+n:16+2*n)=z(13+n:12+2*n);
+        C.x=round(C.x,15);
+        
+        
+        elseif LEVEL==2
         M=zeros(8+n);
         M(1:8,1:8)=C.D.Mq;
         M(1:8,9:8+n)=C.Jc';
@@ -74,6 +108,7 @@ classdef Dynamics_constrain < handle
         
         C.x=C.x+A\B.*dt;
         C.x=round(C.x,15);
+        end
     end
  end
 end

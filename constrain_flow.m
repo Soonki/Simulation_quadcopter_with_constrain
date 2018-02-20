@@ -26,7 +26,11 @@ function [Jc,Jc_dot]=constrain_flow(x)
 %                   -th_dot*Cth                    0                                               -th_dot*Sth*Cps-ps_dot*Cth*Sps                  ];
 %     
     
-     Jc=[0 0 1 0 -D.L1*Sth 0];
-     Jc_dot=[0 0 0 0 -th_dot*D.L1*Cth 0];
+     Jc=[0 0 1 0 -D.L1*Sth 0 0 0];
+         %0 0 0 0    0      1 0 0;
+         %0 0 0 1    0      0 0 0];
+     Jc_dot=[0 0 0 0 -th_dot*D.L1*Cth 0 0 0];
+             %0 0 0 0  0               0 0 0;
+             %0 0 0 0  0               0 0 0];
 end
      

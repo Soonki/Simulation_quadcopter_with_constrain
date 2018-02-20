@@ -48,7 +48,7 @@ for i_time=1:d:n_time
     VertexData2(:,:,i_time) = GeoVerMakeBlock(p-(R*p_center2')',R*R45,[Ly,Lx,Lz]);
     
     VertexData3(:,:,i_time) = GeoVerMakeBlock(p1-(R*R1*p1_center')',R*R1,[Ly,Ly,D.L1]);
-    VertexData4(:,:,i_time) = GeoVerMakeBlock(p2-(R*R2*p2_center')',R*R2,[D.L2,Ly,Ly]);
+    VertexData4(:,:,i_time) = GeoVerMakeBlock([-0.5,-0.5,D.L1],eye(3),[1,1,0.01]);
     
     VertexDataT1(:,:,i_time) = GeoVerMakeBlock(p+[Lx/2 0 0]*R45'*R',R,arrow1);
     VertexDataT2(:,:,i_time) = GeoVerMakeBlock(p+[0 Lx/2 0]*R45'*R',R,arrow2);
@@ -112,8 +112,8 @@ h2.EdgeColor='y';
 
 h3 = patch(PatchData_X3(:,:,1),PatchData_Y3(:,:,1),PatchData_Z3(:,:,1),'r');
 h3.EdgeColor='r';
-h4 = patch(PatchData_X4(:,:,1),PatchData_Y4(:,:,1),PatchData_Z4(:,:,1),'r');
-h4.EdgeColor='r';
+h4 = patch(PatchData_X4(:,:,1),PatchData_Y4(:,:,1),PatchData_Z4(:,:,1),'y');
+h4.EdgeColor='y';
 
 
 
@@ -175,9 +175,9 @@ for i_time=1:d:n_time
     set(h3,'XData',PatchData_X3(:,:,i_time));
     set(h3,'YData',PatchData_Y3(:,:,i_time));
     set(h3,'ZData',PatchData_Z3(:,:,i_time));
-    set(h4,'XData',PatchData_X4(:,:,i_time));
-    set(h4,'YData',PatchData_Y4(:,:,i_time));
-    set(h4,'ZData',PatchData_Z4(:,:,i_time));
+    %set(h4,'XData',PatchData_X4(:,:,i_time));
+    %set(h4,'YData',PatchData_Y4(:,:,i_time));
+    %set(h4,'ZData',PatchData_Z4(:,:,i_time));
     
     set(hT1,'XData',PatchData_XT1(:,:,i_time));
     set(hT1,'YData',PatchData_YT1(:,:,i_time));
