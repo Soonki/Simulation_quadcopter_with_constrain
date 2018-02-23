@@ -48,7 +48,7 @@ for i_time=1:d:n_time
     VertexData2(:,:,i_time) = GeoVerMakeBlock(p-(R*p_center2')',R*R45,[Ly,Lx,Lz]);
     
     VertexData3(:,:,i_time) = GeoVerMakeBlock(p1-(R*R1*p1_center')',R*R1,[Ly,Ly,D.L1]);
-    VertexData4(:,:,i_time) = GeoVerMakeBlock([-0.5,-0.5,D.L1],eye(3),[1,1,0.01]);
+    VertexData4(:,:,i_time) = GeoVerMakeBlock([-0.5,-0.5,0],eye(3),[1,1,0.01]);
     
     VertexDataT1(:,:,i_time) = GeoVerMakeBlock(p+[Lx/2 0 0]*R45'*R',R,arrow1);
     VertexDataT2(:,:,i_time) = GeoVerMakeBlock(p+[0 Lx/2 0]*R45'*R',R,arrow2);
@@ -146,7 +146,7 @@ set(gca,'FontSize',14);
 set(gca,'ZDir','rev');
 set(gca,'YDir','rev');
 axis vis3d equal;
-view([-37.5,30]);
+view([0,0]);
 camlight;
 grid on;
  xlim([-1,1]);
@@ -197,7 +197,7 @@ for i_time=1:d:n_time
     drawnow;
 end
 
- v = VideoWriter(char(yyyymmdd(datetime)+".avi"))
- open(v)
- writeVideo(v,MM)
- close(v)
+%  v = VideoWriter(char(yyyymmdd(datetime)+".avi"))
+%  open(v)
+%  writeVideo(v,MM)
+%  close(v)

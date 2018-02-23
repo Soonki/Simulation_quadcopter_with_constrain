@@ -5,6 +5,7 @@ classdef Dynamics_constrain < handle
     Jc;
     Jc_dot;
     D;
+    x_dot;
  end
  
  methods
@@ -15,6 +16,7 @@ classdef Dynamics_constrain < handle
          C.Jc=Jc;
          C.Jc_dot=Jc_dot;         
          [n nandemo]=size(Jc);
+         C.x_dot=zeros(16+2*n,1);
          y=C.x;
          C.x(7)=y(13);
          C.x(8)=y(15);
@@ -74,6 +76,7 @@ classdef Dynamics_constrain < handle
             pause
         end
         
+        C.x_dot=A\B;
         z=z+A\B.*dt;
         C.x(1:6,1)=z(1:6);
         C.x(9:8+n)=z(7:6+n);

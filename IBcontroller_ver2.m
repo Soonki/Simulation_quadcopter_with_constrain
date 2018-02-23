@@ -41,8 +41,8 @@ classdef IBcontroller_ver2 < handle
          Cont.Q(2,1:4)=[-1 1 -1 1].*Cont.Rt.Ktau;
          Cont.Q(3,1:4)=[1 -1 -1 1].*Cont.Rt.KT*sqrt(2)/4*Cont.D.L;
          Cont.Q(4,1:4)=[-1 -1 1 1].*Cont.Rt.KT*sqrt(2)/4*Cont.D.L;
-         Cont.C=[2 3 3.5 10 10 10 20 14;0.5 0.5 1.5 2 6 6 15 9];
-         Cont.ram=[0.5 0.5 0.01 0.01 0.01 0.01 0.01 0.01];
+         Cont.C=[2 3 3.5 10 55 10 0 0;0.5 0.5 1.5 2 4 6 0 0];
+         Cont.ram=[0.5 0.5 0.01 0.01 0.01 0.01 0 0];
      end
      %-------------------------セッター---------------------------------
      function init(Cont,newu)
@@ -62,13 +62,13 @@ classdef IBcontroller_ver2 < handle
      
      
      function prepare(Cont,ref,x,Dynamics)  
-         Cont.M=Dynamics.Mq;
+         Cont.M=Dynamics.Mq+[zeros(4,6);zeros(2,4),eye(2,2)*Cont.D.m0*Cont.D.L1^2];
          Cont.H=Dynamics.Cq+Dynamics.Gq;
          Cont.e=ref-x;
          Cont.int_e=Cont.int_e+Cont.e*Cont.dt;
          Cont.x_dot=(x-Cont.x)/Cont.dt;
          Cont.x=x;
-         Cont.Mq=Cont.M*[Cont.x_dot(7:12,1);Cont.x_dot(14,1);Cont.x_dot(16,1)];
+         Cont.Mq=Cont.M*[Cont.x_dot(7:12,1)];
          Cont.p_e=Cont.x(1:3)+Rotation(x(4),x(5),x(6))*[Cont.D.L1*sin(x(7))-Cont.D.L2*sin(x(7)+x(8)-pi/2);0;Cont.D.L1*cos(x(7))-Cont.D.L2*cos(x(7)+x(8)-pi/2)];
      end
      

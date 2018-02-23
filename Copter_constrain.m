@@ -6,6 +6,7 @@ classdef Copter_constrain< handle
     D;
     f;
     x;
+    cforce;
  end
  
  methods
@@ -19,6 +20,12 @@ classdef Copter_constrain< handle
          copter.D=Dynamics_constrain(x0,Jc,Jc_dot);
          copter.Servo1=Servo();
          copter.Servo2=Servo();
+         copter.Rotor1.init((copter.D.D.m0)*9.8/4);
+         copter.Rotor2.init((copter.D.D.m0)*9.8/4);
+         copter.Rotor3.init((copter.D.D.m0)*9.8/4);
+         copter.Rotor4.init((copter.D.D.m0)*9.8/4);
+         [n m]=size(copter.D.Jc);
+         copter.cforce=zeros(n,1);
      end
      %------------------------------------------------------------------
      function Move(copter,u,dt,LEVEL)
@@ -38,7 +45,8 @@ classdef Copter_constrain< handle
          copter.x(13)=copter.D.x(7);
          copter.x(14)=copter.D.x(15+n);
          copter.x(15)=copter.D.x(8);
-         copter.x(16)=copter.D.x(16+n);         
+         copter.x(16)=copter.D.x(16+n);
+         copter.cforce=copter.D.x_dot(13+n:12+2*n);
      end
     %------------------------------------------------------------------
  end
